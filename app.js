@@ -30,18 +30,21 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
 
-app.use(
-  cors({
-    credentials: true,
-    origin: process.env.FRONTEND_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
+const corsOrigin = {
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  optionSuccessStatus: 200,
+  "Content-Type": "text/plain",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+};
+app.use(cors(corsOrigin));
 
 app.use(passport.authenticate("session"));
 app.use(passport.initialize());
 app.use(passport.session());
-app.enable("trust proxy")
+app.enable("trust proxy");
 
 connectPassport();
 
