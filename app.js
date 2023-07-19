@@ -46,10 +46,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.enable("trust proxy");
 
-connectPassport();
 
 app.use("/api/v1", userRoute);
 app.use("/api/v1", orderRoute);
 
+connectPassport();
 //using error middleware
 app.use(errorMiddleWare);
