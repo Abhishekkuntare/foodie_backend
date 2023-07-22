@@ -17,13 +17,13 @@ import {
 const router = express.Router();
 
 //register
-router.route("/register").post(singleUpload, register);
+router.route("/userregister").post(singleUpload, register);
 
 //login
-router.route("/login").post(login);
+router.route("/userlogin").post(login);
 
 // logout
-router.route("/logout").get(logout);
+router.route("/userlogout").get(logout);
 
 // get my profile
 router.route("/me").get(isAuthenticated, getMyProfile);
