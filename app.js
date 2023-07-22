@@ -8,6 +8,7 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 import { errorMiddleWare } from "./middlewares/errorMiddleware.js";
 import cors from "cors";
+import loginRegisterUser from "./routes/loginRegister.js";
 
 const app = express();
 export default app;
@@ -46,9 +47,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.enable("trust proxy");
 
-
 app.use("/api/v1", userRoute);
 app.use("/api/v1", orderRoute);
+app.use("/api/v1", loginRegisterUser);
 
 connectPassport();
 //using error middleware
