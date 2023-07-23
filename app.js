@@ -1,36 +1,19 @@
 import express, { urlencoded } from "express";
 import { config } from "dotenv";
-import userRoute from "./routes/user.js";
-import orderRoute from "./routes/order.js";
+
 import { connectPassport } from "./utils/Provider.js";
 import session from "express-session";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 import { errorMiddleWare } from "./middlewares/errorMiddleware.js";
 import cors from "cors";
-import loginRegisterUser from "./routes/loginRegister.js";
 
-const app = express();
-export default app;
 config({ path: "./config/config.env" });
+const app = express();
 
-//using middlewares
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === "development" ? true : true,
-      httpOnly: process.env.NODE_ENV === "development" ? true : true,
-      sameSite: process.env.NODE_ENV === "development" ? false : "none",
-    },
-  })
-);
-app.use(cookieParser());
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
-
+app.use(cookieParser());
 const corsOrigin = {
   origin: process.env.FRONTEND_URL,
   credentials: true,
@@ -42,14 +25,33 @@ const corsOrigin = {
 };
 app.use(cors(corsOrigin));
 
-app.use(passport.authenticate("session"));
-app.use(passport.initialize());
-app.use(passport.session());
-app.enable("trust proxy");
+import userRoute from "./routes/user.js";
+import orderRoute from "./routes/order.js";
+import loginRegisterUser from "./routes/loginRegister.js";
 
 app.use("/api/v1", userRoute);
 app.use("/api/v1", orderRoute);
 app.use("/api/v1", loginRegisterUser);
+
+export default app;
+
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       secure: process.env.NODE_ENV === "development" ? true : true,
+//       httpOnly: process.env.NODE_ENV === "development" ? true : true,
+//       sameSite: process.env.NODE_ENV === "development" ? false : "none",
+//     },
+//   })
+// );
+
+app.use(passport.authenticate("session"));
+app.use(passport.initialize());
+app.use(passport.session());
+app.enable("trust proxy");
 
 connectPassport();
 //using error middleware
