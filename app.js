@@ -14,6 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
+
 const corsOrigin = {
   origin: process.env.FRONTEND_URL,
   credentials: true,
@@ -35,6 +36,12 @@ app.use("/api/v1", loginRegisterUser);
 
 export default app;
 
+app.get("/", (req, res) => {
+  res.send(
+    `<h1>Site is working click front on <a href=${process.env.FRONTEND_URL}>here</a></h1>`
+  );
+});
+
 // app.use(
 //   session({
 //     secret: process.env.SESSION_SECRET,
@@ -48,11 +55,11 @@ export default app;
 //   })
 // );
 
-app.use(passport.authenticate("session"));
-app.use(passport.initialize());
-app.use(passport.session());
-app.enable("trust proxy");
+// app.use(passport.authenticate("session"));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.enable("trust proxy");
 
-connectPassport();
+// connectPassport();
 //using error middleware
 app.use(errorMiddleWare);
