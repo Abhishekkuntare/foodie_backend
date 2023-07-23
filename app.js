@@ -21,8 +21,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === "development" ? false : true,
-      httpOnly: process.env.NODE_ENV === "development" ? false : true,
+      secure: process.env.NODE_ENV === "development" ? true : true,
+      httpOnly: process.env.NODE_ENV === "development" ? true : true,
       sameSite: process.env.NODE_ENV === "development" ? false : "none",
     },
   })
@@ -36,9 +36,9 @@ const corsOrigin = {
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   optionSuccessStatus: 200,
-  "Content-Type": "text/plain",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+  // "Content-Type": "text/plain",
+  // "Access-Control-Allow-Origin": "*",
+  // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
 };
 app.use(cors(corsOrigin));
 
