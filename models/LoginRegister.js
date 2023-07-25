@@ -21,6 +21,11 @@ const LoginRegister = new mongoose.Schema({
     minLength: [6, "Password must be at least 6 characters"],
     select: false,
   },
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
+  },
   avatar: {
     public_id: {
       type: String,
